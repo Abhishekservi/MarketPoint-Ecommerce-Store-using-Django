@@ -7074,12 +7074,13 @@ h6.post-title {
 }
 
 .logo.logo-width-1 {
-  margin-right: 70px;
+  margin-right: 40px;
 }
 
 .logo.logo-width-1 a img {
-  width: 200px;
-  min-width: 200px;
+  margin-left: 10px;
+  width: 250px;
+  min-width: 250px;
   height: 66px
 }
 

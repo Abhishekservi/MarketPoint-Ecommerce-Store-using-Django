@@ -12,7 +12,7 @@
                         <h1 class="mb-15">{{category.title}}</h1>
                         <div class="breadcrumb">
                             <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
-                            <span></span> Shop <span></span> {{category.title}}
+                            <span></span> Category <span></span> {{category.title}}
                         </div>
                     </div>
                     <!-- <div class="col-xl-9 text-end d-none d-xl-block">
@@ -94,7 +94,7 @@
                         <div class="product-cart-wrap mb-30 wow animate__animated animate__fadeIn" data-wow-delay=".1s">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
-                                    <a href="shop-product-right.html">
+                                    <a href="{% url 'core:product-detail' p.pid %}">
                                         <img class="default-img" src="{{p.image.url}}" alt="" />
                                         <img class="hover-img" src="{{p.image.url}}" alt="" />
                                     </a>
@@ -112,7 +112,7 @@
                                 <div class="product-category">
                                     <a href="shop-grid-right.html">{{ p.category.title }}</a>
                                 </div>
-                                <h2><a href="shop-product-right.html">{{ p.title }}</a></h2>
+                                <h2><a href="{% url 'core:product-detail' p.pid %}">{{ p.title }}</a></h2>
                                 <div class="product-rate-cover">
                                     <div class="product-rate d-inline-block">
                                         <div class="product-rating" style="width: 90%"></div>
