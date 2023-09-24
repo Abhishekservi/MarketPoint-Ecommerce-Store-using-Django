@@ -1,5 +1,5 @@
 from django.urls import path
-from core.views import index,product_list_view,category_list_view, category_product_list_view, vendor_list_view,vendor_detail_view, product_detail_view
+from core.views import index,product_list_view,category_list_view, category_product_list_view, vendor_list_view,vendor_detail_view, product_detail_view,tag_list
 
 app_name="core"
 
@@ -18,5 +18,6 @@ urlpatterns =[
     path("vendors/",vendor_list_view,name = "vendor-list"),
     path("vendor/<vid>",vendor_detail_view,name = "vendor-detail"),
 
-
+    #Tags
+    path("products/tag/<slug:tag_slug>/",tag_list, name="tags")
 ]

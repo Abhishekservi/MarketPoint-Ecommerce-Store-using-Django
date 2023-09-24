@@ -4,6 +4,7 @@ from django.utils.html import mark_safe
 from userauths.models import User
 from taggit.managers import TaggableManager
 
+from ckeditor_uploader.fields import RichTextUploadingField
 
 STATUS_CHOICE = (
     ('process',"Processing"),
@@ -58,7 +59,8 @@ class Vendor(models.Model):
     image = models.ImageField(upload_to="user_directory_path", default="Mp1.jpg")
     cover_image = models.ImageField(upload_to="user_directory_path", default="Mp1.jpg")
 
-    description = models.TextField(null=True, blank=True, default="I am Market Point 1")
+    # description = models.TextField(null=True, blank=True, default="I am Market Point 1")
+    description = RichTextUploadingField(null=True, blank=True, default="I am Market Point 1")
 
     address = models.CharField(max_length=100,default="MarketPoint 1")
     contact = models.CharField(max_length=100, default="9967164691")
@@ -92,10 +94,14 @@ class Product(models.Model):
     title = models.CharField(max_length=200,default="Milk") #Title, Heading
     image = models.ImageField(upload_to="user_directory_path", default="product.jpg")
 
+    description = RichTextUploadingField(null=True, blank=True, default="Ths is a product")
+
+
     price = models.DecimalField(max_digits=99999999999999, decimal_places=2, default="1.99")
     old_price = models.DecimalField(max_digits=99999999999999, decimal_places=2, default="2.99")
-
-    specifications = models.TextField(null=True, blank=True)
+    
+    specifications = RichTextUploadingField(null=True, blank=True)
+    # specifications = models.TextField(null=True, blank=True)
     type = models.CharField(max_length=100, default="Organic", null=True,blank=True)
     stock_count = models.CharField(max_length=100, default="10", null =True,blank=True)
     life = models.CharField(max_length=100, default="100 Days", null=True,blank=True)

@@ -101,7 +101,18 @@
                                                 </ul>
                                                 <ul class="float-start">
                                                     <li class="mb-5">SKU: <a href="#">{{P.sku}}</a></li>
-                                                    <li class="mb-5">Tags: <a href="#" rel="tag">Snack</a>, <a href="#" rel="tag">Organic</a>, <a href="#" rel="tag">Brown</a></li>
+                                                    <li class="mb-5">Tags: 
+                                                        {% for tag in P.tags.all %}
+                                                        <a href="{% url 'core:tags' tag.slug %}" rel="tag">   
+                                                            #{{tag.name}}         
+                                                        </a>
+                                                        {% if tag == P.tags.all.last %}
+
+                                                        {% else %}
+                                                        ,
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </li>
                                                     <li>Stock:<span class="in-stock text-brand ml-5">{{P.stock_count}} Items In Stock</span></li>
                                                 </ul>
                                             </div>
@@ -128,7 +139,7 @@
                                         <div class="tab-content shop_info_tab entry-main-content">
                                             <div class="tab-pane fade show active" id="Description">
                                                 <div class="class">
-                                                    <p>{{P.specifications}}</p>
+                                                    <p>{{P.specifications|safe}}</p>
                                                 </div>
                                             </div>
                                             <div class="tab-pane fade" id="Additional-info">
@@ -445,6 +456,7 @@
                                 <ul>
                                     <li>
                                         <i class="fi fi-rs-marker mr-10 text-brand"></i>
+                                        
                                         <span>
                                             {{address.address}} <br />
                                             <br />
