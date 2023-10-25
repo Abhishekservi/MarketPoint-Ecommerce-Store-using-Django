@@ -3,7 +3,7 @@
 <html class="no-js" lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>MarketPoint - Multipurpose eCommerce HTML Template</title>
+        <title>MarketPoint</title>
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,11 +13,15 @@
         <meta property="og:image" content="" />
         <!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/imgs/theme/favicon.png' %}" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"  />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
         <!-- Template CSS -->
         <link rel="stylesheet" href="{% static 'assets/css/plugins/animate.min.css' %}" />
         <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     </head>
 
     <body>
@@ -230,7 +234,7 @@
                         </div>
                         <div class="header-right">
                             <div class="search-style-2">
-                                <form action="#">
+                                <form action="{% url 'core:search' %}" method = "GET">
                                     <select class="select-active">
                                         <option>All Categories</option>
                                         <option>Milks and Dairies</option>
@@ -244,7 +248,8 @@
                                         <option>Noodles & Rice</option>
                                         <option>Ice cream</option>
                                     </select>
-                                    <input type="text" placeholder="Search for items..." />
+                                    <input type="text" placeholder="Search for items..." name="q" />
+                                    <!-- <button class = "fa-solid fa-search" type = "submit"></button> -->
                                 </form>
                             </div>
                             <div class="header-action-right">
@@ -270,72 +275,49 @@
                                         </form>
                                     </div>
                                     <div class="header-action-icon-2">
-                                        <a href="shop-compare.html">
+                                        <a href="{% url 'core:compare' %}">
                                             <img class="svgInject" alt="MarketPoint" src="{% static 'assets/imgs/theme/icons/icon-compare.svg' %}" />
-                                            <span class="pro-count blue">3</span>
+                                            <span class="pro-count blue cart">3</span>
                                         </a>
-                                        <a href="shop-compare.html"><span class="lable ml-0">Compare</span></a>
+                                        <a href="{% url 'core:compare' %}"><span class="lable ml-0">Compare</span></a>
                                     </div>
                                     <div class="header-action-icon-2">
-                                        <a href="shop-wishlist.html">
+                                        <a href="{% url 'core:wishlist' %}">
                                             <img class="svgInject" alt="MarketPoint" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}" />
-                                            <span class="pro-count blue">6</span>
+                                            <span class="pro-count blue wishlist-count">{{wishlist.count}}</span>
                                         </a>
-                                        <a href="shop-wishlist.html"><span class="lable">Wishlist</span></a>
+                                        <a href="{% url 'core:wishlist' %}"><span class="lable">Wishlist</span></a>
                                     </div>
                                     <div class="header-action-icon-2">
-                                        <a class="mini-cart-icon" href="shop-cart.html">
+                                        <a class="mini-cart-icon" href="{% url 'core:cart' %}">
                                             <img alt="MarketPoint" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}" />
-                                            <span class="pro-count blue">2</span>
+                                            <span class="pro-count blue cart-items-count">{{ request.session.cart_data_obj|length }}</span>
                                         </a>
-                                        <a href="shop-cart.html"><span class="lable">Cart</span></a>
+                                        <a href="{% url 'core:cart' %}"><span class="lable">Cart</span></a>
                                         <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                            <ul>
-                                                <li>
-                                                    <div class="shopping-cart-img">
-                                                        <a href="shop-product-right.html"><img alt="MarketPoint" src="{% static 'assets/imgs/shop/thumbnail-3.jpg' %}" /></a>
-                                                    </div>
-                                                    <div class="shopping-cart-title">
-                                                        <h4><a href="shop-product-right.html">Daisy Casual Bag</a></h4>
-                                                        <h4><span>1 × </span>₹800.00</h4>
-                                                    </div>
-                                                    <div class="shopping-cart-delete">
-                                                        <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="shopping-cart-img">
-                                                        <a href="shop-product-right.html"><img alt="MarketPoint" src="{% static 'assets/imgs/shop/thumbnail-2.jpg' %}" /></a>
-                                                    </div>
-                                                    <div class="shopping-cart-title">
-                                                        <h4><a href="shop-product-right.html">Corduroy Shirts</a></h4>
-                                                        <h4><span>1 × </span>₹3200.00</h4>
-                                                    </div>
-                                                    <div class="shopping-cart-delete">
-                                                        <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                                    </div>
-                                                </li>
-                                            </ul>
+
                                             <div class="shopping-cart-footer">
-                                                <div class="shopping-cart-total">
-                                                    <h4>Total <span>₹4000.00</span></h4>
-                                                </div>
+                                                
+                                                {% if delivery == 1 %}
                                                 <div class="shopping-cart-button">
-                                                    <a href="shop-cart.html" class="outline">View cart</a>
-                                                    <a href="shop-checkout.html">Checkout</a>
-                                                </div>
+                                                    <a href="{% url 'core:cart' %}">View cart</a>
+                                                    <a href="{% url 'core:checkout' %}">Checkout</a>
+                                                </div>  
+                                                {% else %}
+                                                <h6 class="text-danger">Delivery available only above 500</h6>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="header-action-icon-2">
-                                        <a href="page-account.html">
+                                        <a href="{% url 'core:customer-dashboard' %}">
                                             <img class="svgInject" alt="MarketPoint" src="{% static 'assets/imgs/theme/icons/icon-user.svg' %}" />
                                         </a>
-                                        <a href="page-account.html"><span class="lable ml-0">{{user.username}}</span></a>
+                                        <a href="{% url 'core:customer-dashboard' %}"><span class="lable ml-0">{{user.username}}</span></a>
                                         <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                             <ul>
                                                 <li>
-                                                    <a href="page-account.html"><i class="fi fi-rs-user mr-10"></i>My Account</a>
+                                                    <a href="{% url 'core:customer-dashboard' %}"><i class="fi fi-rs-user mr-10"></i>My Account</a>
                                                 </li>
                                                 <li>
                                                     <a href="page-account.html"><i class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a>
@@ -455,12 +437,9 @@
                                         <li>
                                             <a href="{% url 'core:vendor-list' %}">Vendors <i class="fi-rs-angle-down"></i></a>
                                             <ul class="sub-menu">
-                                                <li><a href="vendors-grid.html">Vendors Grid</a></li>
-                                                <li><a href="vendors-list.html">Vendors List</a></li>
-                                                <li><a href="vendor-details-1.html">Vendor Details 01</a></li>
-                                                <li><a href="vendor-details-2.html">Vendor Details 02</a></li>
-                                                <li><a href="vendor-dashboard.html">Vendor Dashboard</a></li>
-                                                <li><a href="vendor-guide.html">Vendor Guide</a></li>
+                                                {% for v in vendors %}
+                                                <li><a href="{% url 'core:vendor-detail' v.vid %}">{{v.title}}</a></li>
+                                                {% endfor %}
                                             </ul>
                                         </li>
                                         <li class="position-static">
@@ -545,15 +524,15 @@
                                         <li>
                                             <a href="#">Pages <i class="fi-rs-angle-down"></i></a>
                                             <ul class="sub-menu">
-                                                <li><a href="page-about.html">About Us</a></li>
-                                                <li><a href="page-contact.html">Contact</a></li>
-                                                <li><a href="page-account.html">My Account</a></li>
-                                                <li><a href="page-login.html">Login</a></li>
-                                                <li><a href="page-register.html">Register</a></li>
+                                                <li><a href="{% url 'core:about-us' %}">About Us</a></li>
+                                                <li><a href="{% url 'core:contact' %}">Contact</a></li>
+                                                <li><a href="{% url 'core:customer-dashboard' %}">My Account</a></li>
+                                                <li><a href="{% url 'userauths:sign-in' %}">Login</a></li>
+                                                <li><a href="{% url 'userauths:sign-up' %}">Register</a></li>
                                                 <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
                                                 <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
                                                 <li><a href="page-terms.html">Terms of Service</a></li>
-                                                <li><a href="page-404.html">404 Page</a></li>
+                                                <!-- <li><a href="page-404.html">404 Page</a></li> -->
                                             </ul>
                                         </li>
                                         <li>
@@ -577,51 +556,27 @@
                         <div class="header-action-right d-block d-lg-none">
                             <div class="header-action-2">
                                 <div class="header-action-icon-2">
-                                    <a href="shop-wishlist.html">
+                                    <a href="{% url 'core:wishlist' %}">
                                         <img alt="MarketPoint" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}" />
-                                        <span class="pro-count white">4</span>
+                                        <span class="pro-count white">{{wishlist.count}}</span>
                                     </a>
                                 </div>
                                 <div class="header-action-icon-2">
-                                    <a class="mini-cart-icon" href="#">
+                                    <a class="mini-cart-icon" href="{% url 'core:cart' %}">
                                         <img alt="MarketPoint" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}" />
-                                        <span class="pro-count white">2</span>
+                                        <span class="pro-count white cart-items-count">{{ request.session.cart_data_obj|length }}</span>
                                     </a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                        <ul>
-                                            <li>
-                                                <div class="shopping-cart-img">
-                                                    <a href="shop-product-right.html"><img alt="MarketPoint" src="{% static 'assets/imgs/shop/thumbnail-3.jpg' %}" /></a>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="shop-product-right.html">Plain Striola Shirts</a></h4>
-                                                    <h3><span>1 × </span>₹800.00</h3>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="shopping-cart-img">
-                                                    <a href="shop-product-right.html"><img alt="MarketPoint" src="{% static 'assets/imgs/shop/thumbnail-4.jpg' %}" /></a>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="shop-product-right.html">Macbook Pro 2022</a></h4>
-                                                    <h3><span>1 × </span>₹3500.00</h3>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                        
                                         <div class="shopping-cart-footer">
-                                            <div class="shopping-cart-total">
-                                                <h4>Total <span>₹383.00</span></h4>
-                                            </div>
+                                            {% if delivery == 1 %}
                                             <div class="shopping-cart-button">
-                                                <a href="shop-cart.html">View cart</a>
-                                                <a href="shop-checkout.html">Checkout</a>
+                                                <a href="{% url 'core:cart' %}">View cart</a>
+                                                <a href="{% url 'core:checkout' %}">Checkout</a>
                                             </div>
+                                            {% else %}
+                                            <h6 class="text-danger">Delivery available only above 500</h6>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -632,7 +587,8 @@
                     {% if messages %}
 
                         {% for message in messages %}
-                            <div class="alert" alert-{{messages.tags}}> 
+                        
+                            <div class="alert alert-{{message.tags}}" role="alert"> 
                                 <strong>{{ message }}</strong>
                             </div>
                         {% endfor %}
@@ -682,7 +638,7 @@
                                         <li><a href="index-6.html">Home 6</a></li>
                                     </ul>
                                 </li>
-                                <li class="menu-item-has-children">
+                                <li class="menu-item-has-children"> 
                                     <a href="shop-grid-right.html">shop</a>
                                     <ul class="dropdown">
                                         <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
@@ -702,8 +658,8 @@
                                         <li><a href="shop-filter.html">Shop – Filter</a></li>
                                         <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
                                         <li><a href="shop-cart.html">Shop – Cart</a></li>
-                                        <li><a href="shop-checkout.html">Shop – Checkout</a></li>
-                                        <li><a href="shop-compare.html">Shop – Compare</a></li>
+                                        <li><a href="{% url 'core:checkout' %}">Shop – Checkout</a></li>
+                                        <li><a href="{% url 'core:compare' %}">Shop – Compare</a></li>
                                         <li class="menu-item-has-children">
                                             <a href="#">Shop Invoice</a>
                                             <ul class="dropdown">
@@ -879,7 +835,7 @@
                                 </div>
                                 <div class="banner-text">
                                     <h3 class="icon-box-title">Free delivery</h3>
-                                    <p>24/7 amazing services</p>
+                                    <p>On orders above 1000</p>
                                 </div>
                             </div>
                         </div>
@@ -1013,7 +969,7 @@
                         <div class="footer-bottom"></div>
                     </div>
                     <div class="col-xl-4 col-lg-6 col-md-6">
-                        <p class="font-sm mb-0">&copy; 2021, <strong class="text-brand">MarketPoint</strong> - HTML Ecommerce Template <br />All rights reserved</p>
+                        <p class="font-sm mb-0">&copy; 2023, <strong class="text-brand">MarketPoint</strong><br />All rights reserved</p>
                     </div>
                     <div class="col-xl-4 col-lg-6 text-center d-none d-xl-block">
                         <div class="hotline d-lg-inline-flex mr-30">
@@ -1054,6 +1010,7 @@
         <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
         <script src="{% static 'assets/js/vendor/jquery-migrate-3.3.0.min.js' %}"></script>
         <script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="{% static 'assets/js/plugins/slick.js' %}"></script>
         <script src="{% static 'assets/js/plugins/jquery.syotimer.min.js' %}"></script>
         <script src="{% static 'assets/js/plugins/waypoints.js' %}"></script>
@@ -1073,6 +1030,7 @@
         <script src="{% static 'assets/js/main.js' %}"></script>
         <script src="{% static 'assets/js/shop.js' %}"></script>
         <script src="{% static 'assets/js/function.js' %}"></script>
+
 
     </body>
 </html>

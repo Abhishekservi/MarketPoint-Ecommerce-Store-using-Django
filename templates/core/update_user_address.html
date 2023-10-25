@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{% url 'update_user_address' %}" method="post">
+    {% csrf_token %}
+
+    <input type="text" name="address" placeholder="Enter your new address">
+
+    <input type="submit" value="Update Address">
+</form>
+{% endblock %}

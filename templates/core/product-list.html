@@ -3,6 +3,39 @@
 {% load static %}
 
 {% block content %}
+    <head>
+        <style>
+            input[type="range"] {
+            -webkit-appearance: none;
+            margin-right: 15px;
+            height: 7px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 5px;
+            background-image: linear-gradient(#3bb77e, #3bb77e);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+        
+            input[type="range"]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                height: 20px;
+                width: 20px;
+                border-radius: 50%;
+                background: #3bb77e;
+                cursor: pointer;
+                box-shadow: 0 0 2px 0 #555;
+                transition: background .3s ease-in-out;
+            }
+            
+            input[type=range]::-webkit-slider-runnable-track {
+                -webkit-appearance: none;
+                box-shadow: none;
+                border: none;
+                background: transparent;
+            }
+        </style>
+    </head>
+
     <main class="main">
         <div class="page-header breadcrumb-wrap">
             <div class="container">
@@ -28,18 +61,13 @@
                                     <h5 class="mb-30">By Categories</h5>
                                     <div class="categories-dropdown-wrap font-heading">
                                         <ul>
+                                            {% for c in categories %} 
                                             <li>
-                                                <a href="shop-grid-right.html"> <img src="{% static 'assets/imgs/theme/icons/category-1.svg' %}" alt="" />Milks and Dairies</a>
+                                                <input data-filter="category" class="form-check-input filter-checkbox" type="checkbox" name="checkbox" id="exampleCheckbox2" value="{{c.id}}" />
+                                                &nbsp;&nbsp;
+                                                <a href="{% url 'core:category-product-list' c.cid %}"> <img src="{{c.image.url}}" alt="" />{{c.title}}</a>
                                             </li>
-                                            <li>
-                                                <a href="shop-grid-right.html"> <img src="{% static 'assets/imgs/theme/icons/category-2.svg' %}" alt="" />Clothing &amp; beauty</a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-grid-right.html"> <img src="{% static 'assets/imgs/theme/icons/category-3.svg' %}" alt="" />Pet Foods &amp; Toy</a>
-                                            </li>
-                                            <li class="mb-0">
-                                                <a href="shop-grid-right.html"> <img src="{% static 'assets/imgs/theme/icons/category-4.svg' %}" alt="" />Baking material</a>
-                                            </li>
+                                            {% endfor %}
                                         </ul>
                                     </div>
                                 </div>
@@ -48,50 +76,15 @@
                                 <div class="card">
                                     <h5 class="mb-30">By Vendors</h5>
                                     <div class="d-flex">
-                                        <div class="custome-checkbox mr-80">
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox1"><span>Aldi</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox2" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox2"><span>Adidas</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox3" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox3"><span>Burbe</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox4" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox4"><span>Chanel</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox5" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox5"><span>Prada</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox6" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox6"><span>Kroger</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox7" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox7"><span>Traders</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox8" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox8"><span>Publix</span></label>
+                                        
+                                        <div class="customeee-checkbox mr-80">
+                                            {% for v in vendors %}
+                                            <input class="form-check-input filter-checkbox" data-filter="vendor" type="checkbox" name="checkbox" id="exampleCheckbox1" value="{{v.id}}" />
+                                            <label class="form-check-label"><span>{{v.title}}</span></label>
+                                            <br /><br />    
+                                            {% endfor %}
                                         </div>
-                                        <div class="custome-checkbox">
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox11" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox11"><span>Harris</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox21" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox21"><span>Costco</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox31" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox31"><span>Targets</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox41" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox41"><span>Green Tea</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox51" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox51"><span>iSnack</span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox61" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox61"><span>Pambox</span></label>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -131,28 +124,18 @@
                                     <div class="sidebar-widget price_range range">
                                         <div class="price-filter mb-20">
                                             <div class="price-filter-inner">
-                                                <div id="slider-range" class="mb-20"></div>
+                                                <!-- <div id="slider-range" class="mb-20"></div> -->
+                                                <input type="range" value="{{min_max_price.price__min}}" name="range" class="slider-range" id="range" min="{{ min_max_price.price__min }}" max="{{ min_max_price.price__max }}" oninput="max_price.value=this.value">
                                                 <div class="d-flex justify-content-between">
-                                                    <div class="caption">From: <strong id="slider-range-value1" class="text-brand"></strong></div>
-                                                    <div class="caption">To: <strong id="slider-range-value2" class="text-brand"></strong></div>
+                                                    <div class="caption">From: <strong id="slider-range-value1" class="text-brand"></strong>₹{{min_max_price.price__min|floatformat:0}}</div>
+                                                    <div class="caption">To: <strong id="slider-range-value2" class="text-brand"></strong>₹{{min_max_price.price__max|floatformat:0}}</div>
                                                 </div>
+                                                <input type="number" value="{{min_max_price.price__min|floatformat:0}}" name="checkbox" id="max_price" min="{{min_max_price.price__min}}" max="{{min_max_price.price__max}}" placeholder="Current Price" onkeyup="range.value=this.value" >
                                             </div>
                                         </div>
                                         <div class="custome-checkbox">
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox211" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox211"><span>₹0.00 - ₹20.00 </span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox22" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox22"><span>₹20.00 - ₹40.00 </span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox23" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox23"><span>₹40.00 - ₹60.00 </span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox24" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox24"><span>₹60.00 - ₹80.00 </span></label>
-                                            <br />
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox25" value="" />
-                                            <label class="form-check-label" for="exampleCheckbox25"><span>Over ₹100.00</span></label>
+                                            <button class="btn mt-20 w-100" id="price-filter-btn">Filter</button>
+                                            <!-- <h3>{{min_max_price}}</h3> -->
                                         </div>
                                     </div>
                                 </div>
@@ -163,7 +146,7 @@
                 <div class="col-12">
                     <div class="shop-product-fillter">
                         <div class="totall-product">
-                            <p>We found <strong class="text-brand">29</strong> items for you!</p>
+                            <p>We found <strong class="text-brand"></strong> items for you!</p>
                         </div>
                         <div class="sort-by-product-area">
                             <div class="sort-by-cover mr-10">
@@ -206,14 +189,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row product-grid">
-
+                    <div class="row product-grid" id="filtered-product">
                         {% for p in products %}
                             <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
                                 <div class="product-cart-wrap mb-30 wow animate__animated animate__fadeIn" data-wow-delay=".1s">
                                     <div class="product-img-action-wrap">
                                         <div class="product-img product-img-zoom">
-                                            <a href="shop-product-right.html">
+                                            <a href="{% url 'core:product-detail' p.pid %}">
                                                 <img class="default-img" src="{{p.image.url}}" alt="" />
                                                 <img class="hover-img" src="{{p.image.url}}" alt="" />
                                             </a>
@@ -229,9 +211,9 @@
                                     </div>
                                     <div class="product-content-wrap">
                                         <div class="product-category">
-                                            <a href="shop-grid-right.html">{{ p.category.title }}</a>
+                                            <a href="{% url 'core:category-product-list' p.category.cid %}">{{ p.category.title }}</a>
                                         </div>
-                                        <h2><a href="shop-product-right.html">{{ p.title }}</a></h2>
+                                        <h2><a href="{% url 'core:product-detail' p.pid %}">{{ p.title }}</a></h2>
                                         <div class="product-rate-cover">
                                             <div class="product-rate d-inline-block">
                                                 <div class="product-rating" style="width: 90%"></div>
@@ -239,25 +221,27 @@
                                             <span class="font-small ml-5 text-muted"> (4.0)</span>
                                         </div>
                                         <div>
-                                            <span class="font-small text-muted">By <a href="vendor-details-1.html">{{p.vendor.title}}</a></span>
+                                            <span class="font-small text-muted">By <a href="{% url 'core:vendor-detail' p.vendor.vid %}">{{p.vendor.title}}</a></span>
                                         </div>
                                         <div class="product-card-bottom">
                                             <div class="product-price">
-                                                <span>₹ {{p.price}}</span>
+                                                <span>₹</span><span class="current-product-price-{{p.id}}"> {{p.price}}</span>
                                                 <span class="old-price">₹ {{p.old_price}}</span>
                                             </div>
                                             <div class="add-cart">
-                                                <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                                <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{p.id}}">
+                                                <input type="hidden" class="product-pid-{{p.id}}" value="{{p.pid}}">
+                                                <input type="hidden" class="product-image-{{p.id}}" value="{{p.image.url}}">
+                                                <input type="hidden" class="product-id-{{p.id}}" value="{{p.id}}">
+                                                <input type="hidden" class="product-title-{{p.id}}" value="{{p.title}}">
+                                                
+                                                <button class="add add-to-cart-btn" data-index="{{ p.id }}" style="border: none;" href=""><i class="fi-rs-shopping-cart mr-5"></i>Add </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {% endfor %}
-
-                        <!--end product card-->
-
-                        
+                        {% endfor %}   
                     </div>
                     <!--product grid-->
                     <!-- <div class="pagination-area mt-20 mb-20">

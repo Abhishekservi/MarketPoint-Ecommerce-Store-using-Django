@@ -7,7 +7,7 @@ from taggit.managers import TaggableManager
 from ckeditor_uploader.fields import RichTextUploadingField
 
 STATUS_CHOICE = (
-    ('process',"Processing"),
+    ('processing',"Processing"),
     ('shipped',"Shipped"),
     ('delivered',"Deliverd"),
 
@@ -72,6 +72,7 @@ class Vendor(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    
 
     class Meta:
         verbose_name_plural = "Vendors" 
@@ -177,6 +178,7 @@ class CartOrderItems(models.Model):
     def order_img(self):
         return mark_safe('<img src="/media/%s" width="50" height="50" />' % (self.image.url))
     
+    
 
 
 ############################## Product Review, Wishlists, Address #######################
@@ -207,7 +209,7 @@ class ProductReview(models.Model):
 
 
 
-class wishlist(models.Model):
+class wishlist_model(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
     date = models.DateTimeField(auto_now_add=True)
@@ -222,9 +224,23 @@ class wishlist(models.Model):
 
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    mobile = models.CharField(max_length=100, null=True)
     address = models.CharField(max_length=100, null=True)
     status = models.BooleanField(default=False)
-
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
     
     class Meta:
-        verbose_name_plural = "Address" 
+        verbose_name_plural = "Address"
+
+
+    
+
+
+# class ShopAddress(models.Model):
+#     address = models.TextField()
+#     latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
+#     longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
+
+
+    

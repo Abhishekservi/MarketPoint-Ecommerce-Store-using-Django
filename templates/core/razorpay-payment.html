@@ -1,0 +1,24 @@
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<form>
+    <input type="hidden" name="razorpay_order_id" value="{{ order.id }}">
+    <button type="button" id="rzp-button">Pay with Razorpay</button>
+</form>
+<script>
+    var options = {
+        "key": "{{ settings.RAZORPAY_KEY_ID }}",
+        "amount": "{{ order.amount }}",
+        "currency": "{{ order.currency }}",
+        "name": "Your Company Name",
+        "description": "Payment for your product/service",
+        "order_id": "{{ order.id }}",
+        "handler": function (response) {
+            // Handle the payment success and failure here
+            console.log(response);
+        },
+    };
+
+    var rzp = new Razorpay(options);
+    document.getElementById('rzp-button').onclick = function () {
+        rzp.open();
+    };
+</script>

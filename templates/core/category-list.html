@@ -11,7 +11,7 @@
                             <div class="col-xl-3">
                                 <h1 class="mb-15">Categories</h1>
                                 <div class="breadcrumb">
-                                    <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                                    <a href="{% url 'core:index' %}" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
                                     <span></span> Category
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                             <div class="shop-product-fillter mb-50 pr-30">
                                 <div class="totall-product">
                                     <h2>
-                                        <img class="w-36px mr-10" src="{% static 'assets/imgs/theme/icons/category-1.svg' %}" alt="" />
+                                        <img class="w-36px mr-10"  alt="" />
                                         {{categories.count}} Categories
                                     </h2>
                                 </div>
@@ -99,13 +99,13 @@
                                                 <img class="border-radius-15" src="{{c.image.url}}" alt="" />
                                             </a>
                                             <div class="entry-meta">
-                                                <a class="entry-meta meta-2" href="blog-category-grid.html"><i class="fi-rs-heart"></i></a>
+                                                <!-- <a class="entry-meta meta-2" href="blog-category-grid.html"><i class="fi-rs-heart"></i></a> -->
                                             </div>
                                         </div>
                                         <div class="entry-content-2">
                                             <!-- <h6 class="mb-10 font-sm"><a class="entry-meta text-muted" href="blog-category-grid.html">Side Dish</a></h6> -->
                                             <h4 class="post-title mb-15">
-                                                <a href="blog-post-right.html">{{c.title}}</a>
+                                                <a href="{% url 'core:category-product-list' c.cid %}">{{c.title}}</a>
                                             </h4>
                                             <div class="entry-meta font-xs color-grey mt-10 pb-10">
                                                 <div>
@@ -120,7 +120,7 @@
 
                                 </div>
                             </div>
-                            <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
+                            <!-- <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-start">
                                         <li class="page-item">
@@ -136,7 +136,7 @@
                                         </li>
                                     </ul>
                                 </nav>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-lg-3 primary-sidebar sticky-sidebar">
                             <div class="widget-area">

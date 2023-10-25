@@ -1,0 +1,227 @@
+﻿{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                <span></span> Shop
+                <span></span> Checkout
+            </div>
+        </div>
+    </div>
+    <div class="container mb-80 mt-50">
+        <div class="row">
+            <div class="col-lg-8 mb-40">
+                <h1 class="heading-2 mb-10">Checkout</h1>
+                <div class="d-flex justify-content-between">
+                    <h6 class="text-body">There are <span class="text-brand">{{totalcartitems}}</span> products in your cart</h6>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="row mb-50">
+                    {% if request.user.is_authenticated %}
+                    {% else %}
+                    <div class="col-lg-6 mb-sm-15 mb-lg-0 mb-md-3">
+                        
+                        <div class="toggle_info">
+                            <span><i class="fi-rs-user mr-10"></i><span class="text-muted font-lg">Already have an account?</span> <a href="{% url 'userauths:sign-in' %}" class="collapsed font-lg" aria-expanded="false">Click here to login</a></span>
+                        </div>
+                        
+                        <div class="panel-collapse collapse login_form" id="loginform">
+                            <div class="panel-body">
+                                <p class="mb-30 font-sm">If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing &amp; Shipping section.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="col-lg-6">
+                        <form method="post" class="apply-coupon">
+                            <input type="text" placeholder="Enter Coupon Code...">
+                            <button class="btn  btn-md" name="login">Apply Coupon</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <h4 class="mb-30">Billing Details</h4>
+                    <form method="post">
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <input type="text" required="" name="fname" value="{{request.user.username|title}}"  placeholder="First name *">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <input type="text" required="" name="lname" placeholder="mobile *" value="{{active_address.mobile}}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <input type="text" name="billing_address" value="{{active_address.address}}" required="" placeholder="Address *">
+                            </div>
+                            
+                        </div>
+                        <div>
+                            <h6><a href="{% url 'core:customer-dashboard' %}">Different Address?</a></h6>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="border p-40 cart-totals ml-30 mb-50">
+                    <div class="d-flex align-items-end justify-content-between mb-30">
+                        <h4>Your Order</h4>
+                        <h6 class="text-brand">Subtotal - <span>₹{{delivery_total_cost}}</span></h6>
+                    </div>
+                    <div class="divider-2 mb-30"></div> 
+                    {% if delivery == 1 %}
+                    <a href="{% url 'core:cart' %}" class="btn btn-fill-out btn-block mt-30 mb-40">Go back to the Cart<i class="fi-rs-sign-in ml-15"></i></a>
+                    {% else %}
+                    <h6 class="text-danger">Delivery Available above 500 only</h6>
+                    <a href="{% url 'core:cart' %}" class="btn btn-fill-out btn-block mt-30 mb-40">Go back to the Cart<i class="fi-rs-sign-in ml-15"></i></a>
+                    {% endif %}
+                    <div class="table-responsive order_table checkout">
+                        <table class="table no-border">
+                            <tbody>
+                                
+
+                                {% for product_id,item in cart_data.items %}
+                                <tr>
+                                    <td class="image product-thumbnail"><img src="{{item.image}}" alt="#"></td>
+                                    <td>
+                                        <h6 class="w-160 mb-5"><a href="{% url 'core:product-detail' item.pid %}" class="text-heading">{{item.title|truncatechars:50}}</a></h6></span>
+                                        <div class="product-rate-cover">
+                                                <!-- <div class="product-rate d-inline-block">
+                                                    <div class="product-rating" style="width:90%">
+                                                    </div>
+                                                </div> -->
+                                            <!-- <span class="font-small ml-5 text-muted"> (4.0)</span> -->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h6 class="text-muted pl-10 pr-10">x {{item.qty}}</h6>
+                                    </td>
+                                    <td>
+                                        <h5 class="text-brand">₹{% widthratio item.price 1 item.qty %}</h5>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                                
+
+                                
+
+                                {% if shipping_cost == 0 %}
+                                <tr>
+                                <td class="image product-thumbnail"><img src="{% static 'assets/imgs/theme/icons/freeshipping.jpeg' %}" class="w-100" alt="#"></td>
+                                
+                                <td>
+                                    <span><h6 class="w-160 mb-5" ><a href="#" class="text-heading">Free Shipping</a></h6></span>
+                                    
+                                </td>
+                                <td></td>
+                                <td class="cart_total_amount">
+                                    <h5 class="text-heading text-end">Free</h4>
+                                </td>
+                            </tr>
+                                {% else %}
+                                <tr>
+                                <td class="image product-thumbnail"><img src="{% static 'assets/imgs/theme/icons/fastshipping.jpeg' %}" class="w-100" alt="#"></td>
+                                
+                                <td>
+                                    <h6 class="w-160 mb-5"><a href="#" class="text-heading">Shipping Cost</a></h6></span>
+                                </td>
+                                <td></td>
+                                <td class="cart_total_amount">
+                                    <h5 class="text-heading text-brand">₹{{ shipping_cost }}</h4>
+                                </td>
+                            </tr>
+                                {% endif %}
+
+                                
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="payment ml-30">
+                    <h4 class="mb-30">Payment</h4>
+                    <div class="payment_option">
+                        <div class="custome-radio">
+                            <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios3" checked="">
+                            <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse" data-target="#bankTranfer" aria-controls="bankTranfer">Direct Bank Transfer</label>
+                        </div>
+                        <div class="custome-radio">
+                            <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios4" checked="">
+                            <label class="form-check-label" for="exampleRadios4" data-bs-toggle="collapse" data-target="#checkPayment" aria-controls="checkPayment">Cash on delivery</label>
+                        </div>
+                        <div class="custome-radio">
+                            <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios5" checked="">
+                            <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#paypal" aria-controls="paypal">Online Getway</label>
+                        </div>
+                    </div>
+                    <div class="payment-logo d-flex">
+                        <img class="mr-15" src="{% static 'assets/imgs/theme/icons/payment-paypal.svg' %}" alt="">
+                        <img class="mr-15" src="{% static 'assets/imgs/theme/icons/payment-visa.svg' %}" alt="">
+                        <img class="mr-15" src="{% static 'assets/imgs/theme/icons/payment-master.svg' %}" alt="">
+                        <img src="{% static 'assets/imgs/theme/icons/payment-zapper.svg' %}" alt="">
+                    </div>
+                    <!-- {% if delivery == 1 %}
+                    <div style="width: 250px; height: 100px;">{{paypal_payment_button.render}}</div> -->
+                    <!-- <a href="{% url 'core:payment-completed' %}" class="btn btn-fill-out btn-block mt-30">Place an Order<i class="fi-rs-sign-out ml-15"></i></a> -->
+                    <!-- {% else %}
+                    <a href="{% url 'core:cart' %}" class="btn btn-fill-out btn-block mt-30 mb-40">Go back to the Cart<i class="fi-rs-sign-in ml-15"></i></a>
+                    {% endif %} -->
+                   
+                   <script>
+                    var distance = "{{distance}}";
+                    var ad = "{{shop_address}}"
+                        // Print the distance in the browser's console
+                        console.log('Distance:', distance);
+                        console.log('addrs:', ad);
+
+                   </script>
+                   
+                    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                    <form>
+                        <input type="hidden" name="razorpay_order_id" value="{{ order.id }}"><br>
+                        <button class="btn" type="button" id="rzp-button">Place Your Order</button>
+                    </form>
+                    <script>
+                        var options = {
+                            "key": "{{ settings.RAZORPAY_KEY_ID }}",
+                            "amount": "{{ order.amount }}",
+                            "currency": "{{ order.currency }}",
+                            "name": "Market Point",
+                            "description": "Payment for your product/service",
+                            "order_id": "{{ order.id }}",
+                            "handler": function (response) {
+                                // Handle the payment success and failure here
+                                // console.log(response);
+                                if (response.razorpay_payment_id) {
+                                    // Payment was successful, redirect to the specified URL
+                                    var successRedirectUrl = "{{ success_redirect_url }}";
+                                    window.location.href = successRedirectUrl;
+                                } else {
+                                    // Handle payment failure
+                                    var failedRedirectUrl = "{{ failed_redirect_url }}";
+                                    window.location.href = failedRedirectUrl;                                }
+                            },
+                        };
+
+                        var rzp = new Razorpay(options);
+                        document.getElementById('rzp-button').onclick = function () {
+                            rzp.open();
+                        };
+                    </script>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

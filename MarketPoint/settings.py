@@ -26,12 +26,13 @@ SECRET_KEY = 'django-insecure-&kd^k2y_pwa94im-yg2d*0v3p%+aj@-@h39$_r3ey^_7wgxc7w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,11 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    #Google auth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
 
     # Thir Party Apps
     'taggit',
@@ -60,11 +56,19 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+CORS_ALLOWED_ORIGINS = [
+    "https://beed-115-96-218-186.ngrok-free.app",
+    # Add any other allowed origins as needed
+]
+
 
 ROOT_URLCONF = 'MarketPoint.urls'
 
@@ -155,6 +159,7 @@ JAZZMIN_SETTINGS ={
     'copyright': "Market-Point.com",
 }
 
+LOGIN_URL = "userauths:sign-in"
 
 AUTH_USER_MODEL = 'userauths.User'
 
@@ -183,3 +188,11 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+# SESSION_ENGINE = 'django.contrib.sessions.backends.db'    
+
+PAYPAL_RECEIVER_EMAIL = 'buisnessabhishek@gmail.com'
+PAYPAL_TEST = True
+
+RAZORPAY_KEY_ID  = 'rzp_test_rFQEmVPbp0SE7g'
+SECRET_KEY = 'QuQtSapWfd0MgIdR9C3whlTi'
