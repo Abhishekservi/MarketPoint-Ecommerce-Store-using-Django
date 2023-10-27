@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.db.models import Count,Avg,Q
 
 from core.models import Product, Category, Vendor, CartOrderItems, CartOrder, ProductImages, ProductReview, Address, wishlist_model
+from userauths.models import ContactUs
 from taggit.models import Tag
 from core.forms import ProductReviewForm    
 from django.template.loader import render_to_string
@@ -205,9 +206,14 @@ def filter_product(request):
     max_price = request.GET['max_price']
 
     products = Product.objects.filter(product_status="published").order_by("-id").distinct()
-
-    products = products.filter(price__gte=min_price)
-    products = products.filter(price__lte=max_price)
+    try:
+        products = products.filter(price__gte=min_price)
+    except:
+        products = products.filter(price__gte=18)
+    try:
+        products = products.filter(price__lte=max_price)
+    except:
+        products = products.filter(price__lte=530)    
     
 
     if len(categories)>0:
@@ -604,6 +610,28 @@ def delete_from_wishlist(request):
 
 def contact(request):
     return render(request, "core/contact.html")
+
+def ajax_contact(request):
+    full_name = request.GET['full_name']
+    email = request.GET['email']
+    phone = request.GET['phone']
+    subject = request.GET['subject']
+    message = request.GET['message']
+
+    contact = ContactUs.objects.create(
+        full_name=full_name,
+        email=email,
+        phone=phone,
+        subject=subject,
+        message=message,
+    )
+
+    data = {
+        "bool":True,
+        "message": "Message Sent Successfully"
+    }
+
+    return JsonResponse({"data":data})
 
 def about_us(request):
     return render(request, "core/about-us.html")

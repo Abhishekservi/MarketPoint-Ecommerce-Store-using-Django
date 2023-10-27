@@ -80,6 +80,7 @@ urlpatterns =[
 
     #COntact Page
     path("contact-us/", contact, name="contact"),
+    path("ajax-contact-form/", ajax_contact, name="ajax_contact"),
 
     #About us
     path("about-us/", about_us, name="about-us"),
