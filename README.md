@@ -1,4 +1,4 @@
-# Market-Point-E-commerce store using Django
+# Market-Point E-commerce store using Django
 
 MarketPoint is an e-commerce website built with Django.
 
