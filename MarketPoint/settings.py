@@ -28,18 +28,21 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+SITE_ID=1
 
 # Application definition
 
 INSTALLED_APPS = [
     'corsheaders',
     'jazzmin',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 
     # Thir Party Apps
     'taggit',
@@ -48,7 +51,14 @@ INSTALLED_APPS = [
     #Custom Apps
     'core',
     'userauths',
-    
+
+    #allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.apple',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +94,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -196,3 +207,17 @@ PAYPAL_TEST = True
 
 RAZORPAY_KEY_ID  = 'rzp_test_rFQEmVPbp0SE7g'
 SECRET_KEY = 'QuQtSapWfd0MgIdR9C3whlTi'
+
+
+AUTHENTICATION_BACKENDS = [
+    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+]
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

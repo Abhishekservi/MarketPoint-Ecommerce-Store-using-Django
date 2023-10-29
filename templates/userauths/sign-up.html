@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block content %}
+{% load socialaccount %}
         <main class="main pages">
             <div class="page-header breadcrumb-wrap">
                 <div class="container">
@@ -101,7 +102,7 @@
                                             <img src="{% static 'assets/imgs/theme/icons/logo-facebook.svg' %}" alt="" />
                                             <span>Continue with Facebook</span>
                                         </a>
-                                        <a href="#" class="social-login google-login">
+                                        <a href="{% provider_login_url 'google' %}?next=/" class="social-login google-login">
                                             <img src="{% static 'assets/imgs/theme/icons/logo-google.svg' %}" alt="" />
                                             <span>Continue with Google</span>
                                         </a>

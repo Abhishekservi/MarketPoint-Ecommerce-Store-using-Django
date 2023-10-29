@@ -249,16 +249,26 @@
                                             <span>₹</span><span class="current-product-price-{{p.id}}">{{p.price}}</span>
                                             <span class="old-price">₹{{p.old_price}}</span>
                                         </div>
-                                        <div class="add-cart">
-                                            <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{p.id}}">
-                                            <input type="hidden" class="product-pid-{{p.id}}" value="{{p.pid}}">
-                                            <input type="hidden" class="product-image-{{p.id}}" value="{{p.image.url}}">
-                                            <input type="hidden" class="product-id-{{p.id}}" value="{{p.id}}">
-                                            <input type="hidden" class="product-title-{{p.id}}" value="{{p.title}}">
-                                            
-                                            <div class="d-flex">
-                                                <button class="add add-to-cart-btn" data-index="{{ p.id }}" style="border: none;" href=""><i class="fi-rs-shopping-cart mr-5"></i>Add </button>
-                                                <button style="border: none; background: none;" class="add-to-wishlist" data-product-item="{{p.id}}"><i class="fi-rs-heart" style="fill: aqua"></i></button>    
+                                        
+                                    </div>
+                                    <div class="add-cart">
+                                        <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{p.id}}">
+                                        <input type="hidden" class="product-pid-{{p.id}}" value="{{p.pid}}">
+                                        <input type="hidden" class="product-image-{{p.id}}" value="{{p.image.url}}">
+                                        <input type="hidden" class="product-id-{{p.id}}" value="{{p.id}}">
+                                        <input type="hidden" class="product-title-{{p.id}}" value="{{p.title}}">
+                                        
+                                        <div class="d-flex">
+                                            <div class="add-to-cart-wrapper">
+                                                <button class="add add-to-cart-btn btn w-100 hover-up" data-index="{{ p.id }}" style="border: none;" href=""><i class="fi-rs-shopping-cart mr-5"></i>Add To Cart </button>
+                                                <!-- <button style="border: none; background: none;" class="add-to-wishlist" data-product-item="{{p.id}}"><i class="fi-rs-heart" style="fill: aqua"></i></button>     -->
+                                            </div>
+
+                                        
+                                            <div class="after-added-to-cart" style="display: none;">
+                                                <input class="w-25 decrement-btn flex-fill" data-product="{{product_id}}" type="button" onclick="decrementValue('{{product_id}}')" value="-" />
+                                                <input type="text" placeholder="Qty" class="w-25 mb-10 product-qty-{{product_id}} flex-fill"" value="{{item.qty}}" id="qty-{{product_id}}" />
+                                                <input class="w-25 increment-btn flex-fill" data-product="{{product_id}}" type="button" onclick="incrementValue('{{product_id}}')" value="+" />
                                             </div>
                                         </div>
                                     </div>
@@ -3007,7 +3017,24 @@
                                                 </div>
                                                 <span class="font-xs text-heading"> Stock: {{p.stock_count}}</span>
                                             </div>
-                                            <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To Cart</a>
+                                            <div class="add-cart">
+                                                <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{p.id}}">
+                                                <input type="hidden" class="product-pid-{{p.id}}" value="{{p.pid}}">
+                                                <input type="hidden" class="product-image-{{p.id}}" value="{{p.image.url}}">
+                                                <input type="hidden" class="product-id-{{p.id}}" value="{{p.id}}">
+                                                <input type="hidden" class="product-title-{{p.id}}" value="{{p.title}}">
+                                                
+                                                <div class="d-flex">
+                                                    <button class="add add-to-cart-btn btn w-100 hover-up" data-index="{{ p.id }}" style="border: none;" href=""><i class="fi-rs-shopping-cart mr-5"></i>Add To Cart </button>
+                                                    <!-- <button style="border: none; background: none;" class="add-to-wishlist" data-product-item="{{p.id}}"><i class="fi-rs-heart" style="fill: aqua"></i></button>     -->
+                                                   
+                                                </div>
+                                                <div class="d-flex" id="after-added-to-cart">
+                                                    <input class="w-25 decrement-btn flex-fill" data-product="{{product_id}}" type="button" onclick="decrementValue('{{product_id}}')" value="-" />
+                                                    <input type="text" placeholder="Qty" class="w-25 mb-10 product-qty-{{product_id}} flex-fill"" value="{{item.qty}}" id="qty-{{product_id}}" />
+                                                    <input class="w-25 increment-btn flex-fill" data-product="{{product_id}}" type="button" onclick="incrementValue('{{product_id}}')" value="+" />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     {% endfor %}
@@ -3783,4 +3810,27 @@
     </section>
     <!--End 4 columns-->
 </main>
+<script type="text/javascript">
+    function incrementValue(productId)
+    {
+        var value = parseInt(document.getElementById('qty-' + productId).value, 10);
+        value = isNaN(value) ? 0 : value;
+        if(value<1000){
+            value++;
+        }
+        // value = Math.min(value, 10);
+        document.getElementById('qty-' + productId).value = value;
+            
+    }
+    function decrementValue(productId)
+    {
+        var value = parseInt(document.getElementById('qty-' + productId).value, 10);
+        value = isNaN(value) ? 0 : value;
+        if(value>1){
+            value--;
+                document.getElementById('qty-' + productId).value = value;
+        }
+    
+    }
+    </script>
 {% endblock content %}

@@ -171,6 +171,11 @@ $(document).ready(function (){
                 this_val.html("✔️");
                 console.log("Added Product to cart!");
                 $(".cart-items-count").text(response.totalcartitems)
+                $('.add-to-cart-wrapper').hide();
+                
+                // Show increment/decrement section
+                
+                $(this).next('.after-added-to-cart').show();
             }, 
         })
 

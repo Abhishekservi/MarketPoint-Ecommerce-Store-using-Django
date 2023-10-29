@@ -8,6 +8,9 @@ from userauths.models import User
 
 
 def register_view(request):
+    if request.user.is_authenticated:
+        messages.warning(request, f"Hey! You are already logged in.")
+        return redirect("core:index")
 
     if request.method =="POST":
         form = UserRegisterForm(request.POST or None)
