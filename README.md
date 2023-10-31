@@ -45,6 +45,18 @@ The app should now be running at http://localhost:8000
 <li>Modify models in apps/products and apps/orders</li>
 <li>Add new apps for coupons, user profile etc.</li><br>
 
+<h2>Demo Images</h2>
+
+<h3>Front Page</h3>
+
+![image](https://github.com/Abhishekservi/MarketPoint-Ecommerce-Store-using-Django/assets/90319592/bd786f27-6373-48a8-806e-ae5c8306a911)
+
+
+<h3>Shop Page</h3>
+
+![image](https://github.com/Abhishekservi/MarketPoint-Ecommerce-Store-using-Django/assets/90319592/cd0eadb5-f989-4077-96f5-0f028710de1a)
+
+
 <b>License</b>
 
 The source code is released under an MIT License.
